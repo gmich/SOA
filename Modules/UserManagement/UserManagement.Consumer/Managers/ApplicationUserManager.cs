@@ -4,8 +4,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using System;
+using Model.Membership;
 
-namespace DAL.Membership.Managers
+namespace UserManagement.Consumer.Managers
 {
     public class ApplicationUserManager : UserManager<ApplicationUser, string>
     {

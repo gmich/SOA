@@ -1,7 +1,8 @@
-﻿using DAL.Membership.Managers;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
+using Model.Membership;
+using UserManagement.Consumer.Managers;
 
-namespace DAL.Membership
+namespace UserManagement.Consumer
 {
     public class ApplicationUserValidator : UserValidator<ApplicationUser, string>
     {

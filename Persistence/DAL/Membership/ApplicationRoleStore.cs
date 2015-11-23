@@ -2,8 +2,9 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Data.Entity;
+using Model.Membership;
 
-namespace DAL.Membership.Persistence
+namespace DAL.Membership
 {
     public class ApplicationRoleStore
     : RoleStore<ApplicationRole, string, ApplicationUserRole>,

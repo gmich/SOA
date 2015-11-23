@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 
-namespace DAL.Membership
+namespace Model.Membership
 {
     public class ApplicationRole : IdentityRole<string, ApplicationUserRole>
     {

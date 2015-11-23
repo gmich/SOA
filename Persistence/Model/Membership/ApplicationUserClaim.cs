@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace DAL.Membership
+namespace Model.Membership
 {
     public class ApplicationUserClaim : IdentityUserClaim<string>
     {

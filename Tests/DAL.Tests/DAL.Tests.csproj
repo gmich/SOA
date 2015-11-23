@@ -111,6 +111,10 @@
       <Project>{b302b1f2-3b65-4daa-8607-c8045a6a7012}</Project>
       <Name>DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Persistence\Model\Model.csproj">
+      <Project>{eefaad57-eec1-4cff-81af-2f90adbce037}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

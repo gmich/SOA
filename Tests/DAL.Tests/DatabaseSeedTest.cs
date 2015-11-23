@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DAL.Persistence;
-using DAL.Model;
 using System.Linq;
+using Model;
 
 namespace DAL.Tests
 {

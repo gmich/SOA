@@ -93,23 +93,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Membership\ApplicationRole.cs" />
-    <Compile Include="Membership\ApplicationUser.cs" />
-    <Compile Include="Membership\ApplicationUserClaim.cs" />
-    <Compile Include="Membership\ApplicationUserLogin.cs" />
-    <Compile Include="Membership\ApplicationUserRole.cs" />
-    <Compile Include="Membership\ApplicationUserValidator.cs" />
-    <Compile Include="Membership\Managers\ApplicationRoleManager.cs" />
-    <Compile Include="Membership\Managers\ApplicationSignInManager.cs" />
-    <Compile Include="Membership\Managers\ApplicationUserManager.cs" />
-    <Compile Include="Membership\Persistence\ApplicationRoleStore.cs" />
-    <Compile Include="Membership\Persistence\ApplicationUserStore.cs" />
+    <Compile Include="Membership\ApplicationRoleStore.cs" />
+    <Compile Include="Membership\ApplicationUserStore.cs" />
     <Compile Include="Migrations\201511222314050_Initial Create.cs" />
     <Compile Include="Migrations\201511222314050_Initial Create.Designer.cs">
       <DependentUpon>201511222314050_Initial Create.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Model\Item.cs" />
     <Compile Include="Persistence\ApplicationDbContext.cs" />
     <Compile Include="Persistence\MySqlConfiguration.cs" />
     <Compile Include="Persistence\MySqlHistoryContext.cs" />
@@ -127,6 +117,12 @@
     <EmbeddedResource Include="Migrations\201511222314050_Initial Create.resx">
       <DependentUpon>201511222314050_Initial Create.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{eefaad57-eec1-4cff-81af-2f90adbce037}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

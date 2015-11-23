@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Model.Membership;
 
-namespace DAL.Membership.Managers
+namespace UserManagement.Consumer.Managers
 {
     public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
     {

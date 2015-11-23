@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
+using Model.Membership;
 
-namespace DAL.Membership.Managers
+namespace UserManagement.Consumer.Managers
 {
     public class ApplicationRoleManager : RoleManager<ApplicationRole>
     {        

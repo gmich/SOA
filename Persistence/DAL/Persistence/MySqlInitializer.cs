@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace DAL.Persistence
 {
-    public class MySqlInitializer : IDatabaseInitializer<ApplicationDbContext>
+    internal class MySqlInitializer : IDatabaseInitializer<ApplicationDbContext>
     {
         public void InitializeDatabase(ApplicationDbContext context)
         {

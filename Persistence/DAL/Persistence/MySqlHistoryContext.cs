@@ -4,7 +4,7 @@ using System.Data.Entity.Migrations.History;
 
 namespace DAL.Persistence
 {
-    public class MySqlHistoryContext : HistoryContext
+    internal class MySqlHistoryContext : HistoryContext
     {
         public MySqlHistoryContext(DbConnection connection, string defaultSchema)
             : base(connection, defaultSchema)

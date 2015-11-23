@@ -2,7 +2,7 @@
 
 namespace DAL.Persistence
 {
-    public class MySqlConfiguration : DbConfiguration
+    internal class MySqlConfiguration : DbConfiguration
     {
         public MySqlConfiguration()
         {

@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using DAL;
-using DAL.Repositories;
+using DAL.Repositories.API;
 using System;
 
 namespace Processing.Core
@@ -13,7 +13,7 @@ namespace Processing.Core
         public Startup()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterModule<DalModule>();
+            builder.RegisterModule<DalEFModule>();
 
             var container = builder.Build();
         }

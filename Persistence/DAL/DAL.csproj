@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -93,6 +97,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DalModule.cs" />
     <Compile Include="Membership\ApplicationRoleStore.cs" />
     <Compile Include="Membership\ApplicationUserStore.cs" />
     <Compile Include="Migrations\201511222314050_Initial Create.cs" />
@@ -105,6 +110,8 @@
     <Compile Include="Persistence\MySqlHistoryContext.cs" />
     <Compile Include="Persistence\MySqlInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\API\EFGenericRepository.cs" />
+    <Compile Include="Repositories\API\IRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Mapping\" />

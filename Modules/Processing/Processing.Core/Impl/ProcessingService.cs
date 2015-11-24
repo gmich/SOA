@@ -5,14 +5,22 @@ using System.Text;
 using System.Threading.Tasks;
 using Model;
 using Processing.Core.API;
+using DAL.Repositories.API;
 
 namespace Processing.Core.Impl
 {
     internal class ProcessingService : IProcessingService
     {
-        public IEnumerable<Item> GetProcessedItems(int amount)
+        private readonly IRepository<Item> itemRepository;
+
+        public ProcessingService(IRepository<Item> itemRepository)
         {
-            throw new NotImplementedException();
+            this.itemRepository = itemRepository;
+        }
+
+        public IEnumerable<Item> GetItemsByName(string name)
+        {
+            return itemRepository.Query(item => item.Name == name);
         }
     }
 }

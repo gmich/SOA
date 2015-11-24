@@ -9,6 +9,6 @@ namespace Processing.Core.API
 {
     public interface IProcessingService
     {
-        IEnumerable<Item> GetProcessedItems(int amount);
+        IEnumerable<Item> GetItemsByName(string name);
     }
 }

@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Linq;
 using DAL.Repositories.API;
+using System.Linq.Expressions;
 
 namespace DAL.Repositories
 {
@@ -26,14 +27,14 @@ namespace DAL.Repositories
         public void Update(TEntity entityToDelete) =>
             markEntityAs(entityToDelete, EntityState.Modified);
 
-        public IQueryable<TProjected> Project<TProjected>(Func<TEntity, TProjected> projection) =>
-            entities.Select(e => projection(e));
+        public IQueryable<TProjected> Project<TProjected>(Expression<Func<TEntity, TProjected>> projection) =>
+            entities.Select(projection);
 
         public IQueryable<TEntity> GetAll() =>
             entities.AsQueryable();
 
-        public IQueryable<TEntity> Query(Predicate<TEntity> query) =>
-            entities.Where(e => query(e));
+        public IQueryable<TEntity> Query(Expression<Func<TEntity,bool>> query) =>
+            entities.Where(query);
 
     }
 

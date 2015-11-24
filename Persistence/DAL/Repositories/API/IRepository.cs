@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace DAL.Repositories.API
 {
@@ -15,9 +16,9 @@ namespace DAL.Repositories.API
 
         IQueryable<TEntity> GetAll();
 
-        IQueryable<TProjected> Project<TProjected>(Func<TEntity, TProjected> projection);
+        IQueryable<TProjected> Project<TProjected>(Expression<Func<TEntity, TProjected>> projection);
 
-        IQueryable<TEntity> Query(Predicate<TEntity> query);
+        IQueryable<TEntity> Query(Expression<Func<TEntity, bool>> query);
 
     }
 }

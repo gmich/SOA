@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using DAL.Repositories.API;
+using Model;
 using Processing.Core.API;
 using Processing.Core.Impl;
 using System;
@@ -13,8 +15,10 @@ namespace Processing.Core
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.Register(c => new ProcessingService()).As<IProcessingService>();
+            builder.Register(c => new ProcessingService(c.Resolve<IRepository<Item>>()))
+                    .As<IProcessingService>();
+        }        
 
-        }
     }
+
 }

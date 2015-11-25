@@ -6,22 +6,22 @@ using Contracts;
 
 namespace ServiceBus.Tests
 {
-    [TestFixture]
-    public class ItemServiceTests : InMemoryTestFixture
-    {
-        //[Test]
-        public async Task InMemory_AsyncTest()
-        {
-            using (var service = Service.InMemory)
-            {
-                await Bus.Publish(new RequestItemMessage { ItemName = "thing" });
-            }
-        }
+    //[TestFixture]
+    //public class ItemServiceTests : InMemoryTestFixture
+    //{
+    //    [Test]
+    //    public async Task InMemory_AsyncTest()
+    //    {
+    //        using (var service = Service.InMemory)
+    //        {
+    //            await Bus.Publish(new RequestItemMessage { ItemName = "thing" });
+    //        }
+    //    }
 
-        public class RequestItemMessage : RequestItem
-        {
-            public string ItemName { get; set; }
-        }
-
-    }
+    //    public class RequestItemMessage : RequestItem
+    //    {
+    //        public string ItemName { get; set; }
+    //    }
+    //
+    //}
 }

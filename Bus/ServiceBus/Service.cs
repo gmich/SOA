@@ -4,7 +4,10 @@ using Processing.Consumer;
 using Billing.Consumer;
 using UserManagement.Consumer;
 using MassTransit;
-using System.Collections.Generic;
+using System.Reflection;
+using ServiceBus.Config;
+using MassTransit.Log4NetIntegration.Logging;
+[assembly: log4net.Config.XmlConfigurator(ConfigFileExtension = "log4net", Watch = true)]
 
 namespace ServiceBus
 {
@@ -23,25 +26,37 @@ namespace ServiceBus
 
             container = builder.Build();
 
-            busHandle = Bus.Factory.CreateUsingRabbitMq(cfg =>
-            {
-                //TODO: get info from app.config
-                var host = cfg.Host(new Uri("rabbitmq://localhost/"), h =>
-                {
-                    h.Username("guest");
-                    h.Password("guest");
-                });
-                cfg.ReceiveEndpoint(host, "every_consumer_queue", e =>
-                {
-                    var consumers = container.Resolve<IEnumerable<IConsumer>>();
-                    throw new Exception("Consumers dont resolve using IConsumer. Find another way");
-                    foreach (var consumer in consumers)
-                    {
-                        e.Consumer(() => consumer);
-                    }
-                });
-            }).Start();
+            Log4NetLogger.Use();
+            busHandle =
+                  BusConfig
+                  .ForRabbitMq(new[]
+                  {
+                    new EndpointConfiguration(
+                        "dont_put_all_consumers_in_the_same_queue",
+                        ecfg => ScanContractAssembly(container, ecfg, "Contracts"))
+                  })
+                  .Start();
+        }
 
+        public void ScanContractAssembly(
+            IComponentContext container,
+            IRabbitMqReceiveEndpointConfigurator config,
+            string assemblyName)
+        {
+            MethodInfo method = typeof(Service).GetMethod("ResolveConsumer");
+            var bindings = new object[] { container, config };
+            foreach (Type type in Assembly.Load(assemblyName).GetTypes())
+            {
+                method.MakeGenericMethod(type).Invoke(null, bindings);
+            }
+        }
+
+        public static void ResolveConsumer<TContract>(
+            IComponentContext container,
+            IRabbitMqReceiveEndpointConfigurator config)
+            where TContract : class
+        {
+            config.Consumer(() => container.Resolve<IConsumer<TContract>>());
         }
 
         #region Finalization
@@ -57,7 +72,7 @@ namespace ServiceBus
 
             Dispose(false);
         }
-   
+
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)

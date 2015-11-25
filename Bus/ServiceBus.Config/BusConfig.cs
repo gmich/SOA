@@ -27,6 +27,20 @@ namespace ServiceBus.Config
             });
         }
 
+        public static IBusControl InMemory(EndpointConfiguration[] endpointConfigs)
+        {
+            return Bus.Factory.CreateUsingInMemory(cfg =>
+            {
+                foreach (var config in endpointConfigs)
+                {
+                    cfg.ReceiveEndpoint(config.QueueName, ecfg =>
+                    {
+                        config.Configuration(ecfg);
+                    });
+                }
+            });
+        }
+
         private static Uri GetHostAddress()
         {
             var uriBuilder = new UriBuilder

@@ -7,6 +7,7 @@ using MassTransit;
 using System.Reflection;
 using ServiceBus.Config;
 using MassTransit.Log4NetIntegration.Logging;
+
 [assembly: log4net.Config.XmlConfigurator(ConfigFileExtension = "log4net", Watch = true)]
 
 namespace ServiceBus
@@ -16,7 +17,7 @@ namespace ServiceBus
         private readonly IContainer container;
         private readonly BusHandle busHandle;
 
-        public Service()
+        private Service(Func<EndpointConfiguration[], IBusControl> configurationMethod)
         {
             var builder = new ContainerBuilder();
 
@@ -28,15 +29,21 @@ namespace ServiceBus
 
             Log4NetLogger.Use();
             busHandle =
-                  BusConfig
-                  .ForRabbitMq(new[]
+                  configurationMethod(new[]
                   {
                     new EndpointConfiguration(
                         "dont_put_all_consumers_in_the_same_queue",
-                        ecfg => ScanContractAssembly(container, ecfg, "Contracts"))
+                        ecfg => ScanContractAssembly(container, ecfg as IRabbitMqReceiveEndpointConfigurator, "Contracts"))
                   })
                   .Start();
         }
+
+        public static Service RabbitMQ => 
+            new Service(config => BusConfig.ForRabbitMq(config));
+
+        public static Service InMemory => 
+            new Service(config => BusConfig.InMemory(config));
+
 
         public void ScanContractAssembly(
             IComponentContext container,

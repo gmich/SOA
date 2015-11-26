@@ -91,6 +91,7 @@
   <ItemGroup>
     <Compile Include="ApplicationUserExtensions.cs" />
     <Compile Include="ApplicationUserValidator.cs" />
+    <Compile Include="OwinConfiguration.cs" />
     <Compile Include="UserManagementConsumerModule.cs" />
     <Compile Include="Managers\ApplicationRoleManager.cs" />
     <Compile Include="Managers\ApplicationSignInManager.cs" />

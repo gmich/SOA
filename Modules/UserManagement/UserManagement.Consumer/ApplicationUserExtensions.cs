@@ -10,10 +10,11 @@ namespace UserManagement.Consumer
     {
         public static async Task<ClaimsIdentity> GenerateUserIdentityAsync(
             this ApplicationUser user,
-            ApplicationUserManager manager)
+            ApplicationUserManager manager,
+            string authenticationType)
         {
             var userIdentity = await manager
-                .CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+                .CreateIdentityAsync(user, authenticationType);
             return userIdentity;
         }
     }

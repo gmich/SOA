@@ -7,8 +7,7 @@ namespace UserManagement.Consumer
         protected override void Load(ContainerBuilder builder)
         {
 
-        }        
+        }
 
     }
-
 }

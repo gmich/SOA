@@ -13,8 +13,10 @@ namespace DAL.Repositories.API
         void Delete(TEntity entityToDelete);
 
         void Update(TEntity entityToDelete);
+                
+        void Replace<TKey>(Func<TEntity, TKey> keyRetriever, TEntity entity);
 
-        IQueryable<TEntity> GetAll();
+        IQueryable<TEntity> Entries();
 
         IQueryable<TProjected> Project<TProjected>(Expression<Func<TEntity, TProjected>> projection);
 

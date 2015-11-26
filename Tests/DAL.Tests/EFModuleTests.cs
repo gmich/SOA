@@ -46,5 +46,23 @@ namespace DAL.Tests
 
         }
 
+        //[TestMethod]
+        public void Update_Queried_Entity_With_A_Different_Instance_Test()
+        {
+            var itemRepo = GetRepository<Item>();
+
+            var entries = itemRepo.Entries().ToList();
+            itemRepo.Replace(x=>x.ItemId,new Item
+            {
+                ItemId = 1,
+                Name = "Thing",
+                Info = "something"
+            });
+
+            unitOfWork.TryInScope(c => c.Commit(),
+                                  onException: (rollback, ex) => rollback());
+
+        }
+
     }
 }

@@ -18,6 +18,22 @@ namespace DAL.Repositories
             this.markEntityAs = markEntityAs;
         }
 
+        public void Replace<TKey>(Func<TEntity, TKey> keyRetriever, TEntity entity)
+        {
+            if (entities
+                .Local
+                .Any(localEntity =>
+                    keyRetriever(localEntity).
+                    Equals(keyRetriever(entity))))
+            {
+                markEntityAs(entities.Local
+                    .Where(localEntity =>
+                      keyRetriever(localEntity).Equals(keyRetriever(entity)))
+                      .First(), EntityState.Detached);
+            }
+            markEntityAs(entity, EntityState.Modified);
+        }
+
         public void Add(TEntity entityToDelete) =>
             entities.Add(entityToDelete);
 
@@ -30,10 +46,10 @@ namespace DAL.Repositories
         public IQueryable<TProjected> Project<TProjected>(Expression<Func<TEntity, TProjected>> projection) =>
             entities.Select(projection);
 
-        public IQueryable<TEntity> GetAll() =>
+        public IQueryable<TEntity> Entries() =>
             entities.AsQueryable();
 
-        public IQueryable<TEntity> Query(Expression<Func<TEntity,bool>> query) =>
+        public IQueryable<TEntity> Query(Expression<Func<TEntity, bool>> query) =>
             entities.Where(query);
 
     }

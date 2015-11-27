@@ -131,6 +131,10 @@
       <Project>{a70e59bd-de6f-4a6e-a1a0-6a7653c2b57e}</Project>
       <Name>Contracts</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Bus\ServiceBus.Config\ServiceBus.Config.csproj">
+      <Project>{07ae4aa8-764d-467f-9c09-4bac24d81d64}</Project>
+      <Name>ServiceBus.Config</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Bus\ServiceBus\ServiceBus.csproj">
       <Project>{fc2cfa38-df8a-4b2f-88cd-03ff0f331f7a}</Project>
       <Name>ServiceBus</Name>

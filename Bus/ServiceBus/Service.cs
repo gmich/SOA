@@ -12,7 +12,7 @@ namespace ServiceBus
     public class Service : IDisposable
     {
         private readonly IContainer container;
-        public BusHandle BusHandle { get; }
+        public BusHandle BusHandle { get; private set; }
 
         public IBusControl Bus { get; }
 
@@ -32,6 +32,17 @@ namespace ServiceBus
                   });
            
             BusHandle = Bus.Start();
+        }
+
+        public Service Start()
+        {
+            BusHandle = Bus.Start();
+            return this;
+        }
+
+        public void Stop()
+        {
+            BusHandle.Stop();
         }
 
         public IRequestClient<TRequest,TResponse> CreateRequestClient<TRequest,TResponse>()

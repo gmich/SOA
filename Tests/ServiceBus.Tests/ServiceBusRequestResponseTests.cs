@@ -14,6 +14,7 @@ using Model;
 using System.Linq;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using ServiceBus.Config;
 
 namespace ServiceBus.Tests
 {
@@ -26,12 +27,12 @@ namespace ServiceBus.Tests
         public void RabbitMQ_Request_Retrieve_Test()
         {
             var builder = new ContainerBuilder();
-            
+
             builder.RegisterModule<DalEFModule>();
             builder.RegisterModule<ProcessingConsumerModule>();
             builder.RegisterModule<BillingConsumerModule>();
             builder.RegisterModule<UserManagementConsumerModule>();
-            using (var service = Service.ForRabbitMQ(builder))
+            using (var service = Service.ForRabbitMQ(builder).Start())
             {
                 var msg = new RequestItemMessage("Thing");
                 var client = service.CreateRequestClient<RequestItem, ItemResponse>();
@@ -39,6 +40,23 @@ namespace ServiceBus.Tests
                 var response = client.Request(msg).Result;
                 Assert.AreEqual("something", response.ItemInfo);
             }
+        }
+
+        [TestMethod]
+        [TestCategory("WinService")]
+        public void WinService_Request_Retrieve_Test()
+        {
+            var bus = BusConfig.ForRabbitMq(Array.Empty<EndpointConfiguration>());
+            var handle = bus.Start();
+            var msg = new RequestItemMessage("Thing");
+            var client = bus.CreateRequestClient<RequestItem, ItemResponse>(
+                new Uri("rabbitmq://localhost/service_queue"),
+                TimeSpan.FromSeconds(10));
+
+            var response = client.Request(msg).Result;
+            handle.Dispose();
+
+            Assert.AreEqual("something", response.ItemInfo);
         }
 
         [TestMethod]
@@ -61,7 +79,7 @@ namespace ServiceBus.Tests
             builder.Register(c =>
                 mockItemRepository.Object).As<IRepository<Item>>();
 
-            using (var service = Service.InMemory(builder))
+            using (var service = Service.InMemory(builder).Start())
             {
                 var msg = new RequestItemMessage("mockSelection");
                 var client = service.CreateRequestClient<RequestItem, ItemResponse>();

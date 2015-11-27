@@ -91,6 +91,10 @@
       <Project>{9567f7a8-54d2-43d7-81e5-4814fc213bc3}</Project>
       <Name>UserManagement.Consumer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Persistence\DAL\DAL.csproj">
+      <Project>{b302b1f2-3b65-4daa-8607-c8045a6a7012}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Contracts\Contracts.csproj">
       <Project>{a70e59bd-de6f-4a6e-a1a0-6a7653c2b57e}</Project>
       <Name>Contracts</Name>

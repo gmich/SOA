@@ -5,6 +5,9 @@ using System.Linq;
 using Model;
 using Autofac;
 using DAL.Repositories.API;
+using System.Threading.Tasks;
+using ServiceBus;
+using MassTransit;
 
 namespace DAL.Tests
 {
@@ -28,8 +31,8 @@ namespace DAL.Tests
         {
             return container.Resolve<IRepository<TEntity>>();
         }
-        
-        //[TestMethod]
+
+        [TestMethod]
         public void ItemRepositoryTest()
         {
             var itemRepo = GetRepository<Item>();

@@ -15,7 +15,8 @@ namespace Processing.Core
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.Register(c => new ProcessingService(c.Resolve<IRepository<Item>>()))
+            builder.Register(c => new ProcessingService(
+                    c.Resolve<IRepository<Item>>()))
                     .As<IProcessingService>();
         }        
 

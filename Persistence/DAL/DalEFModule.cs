@@ -11,7 +11,8 @@ namespace DAL
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.Register(c => new ApplicationDbContext())
+            builder.Register(c => 
+            new ApplicationDbContext())
                    .AsSelf()
                    .InstancePerLifetimeScope();
 

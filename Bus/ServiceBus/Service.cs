@@ -7,6 +7,7 @@ using MassTransit;
 using System.Reflection;
 using ServiceBus.Config;
 using MassTransit.Log4NetIntegration.Logging;
+using DAL;
 
 [assembly: log4net.Config.XmlConfigurator(ConfigFileExtension = "log4net", Watch = true)]
 
@@ -15,12 +16,15 @@ namespace ServiceBus
     public class Service : IDisposable
     {
         private readonly IContainer container;
-        private readonly BusHandle busHandle;
+        public BusHandle BusHandle { get; }
+
+        public IBusControl Bus { get; }
 
         private Service(Func<EndpointConfiguration[], IBusControl> configurationMethod)
         {
             var builder = new ContainerBuilder();
 
+            builder.RegisterModule<DalEFModule>();
             builder.RegisterModule<ProcessingConsumerModule>();
             builder.RegisterModule<BillingConsumerModule>();
             builder.RegisterModule<UserManagementConsumerModule>();
@@ -28,26 +32,35 @@ namespace ServiceBus
             container = builder.Build();
 
             Log4NetLogger.Use();
-            busHandle =
-                  configurationMethod(new[]
+            Bus = configurationMethod(new[]
                   {
                     new EndpointConfiguration(
-                        "dont_put_all_consumers_in_the_same_queue",
-                        ecfg => ScanContractAssembly(container, ecfg as IRabbitMqReceiveEndpointConfigurator, "Contracts"))
-                  })
-                  .Start();
+                        //WARN: dont put all consumers in the same queue
+                        "service_queue",
+                        //WARN: check for IReceiveEndpointRabbitMQ
+                        ecfg => ScanContractAssembly(container, ecfg, "Contracts"))
+                  });
+           
+            BusHandle = Bus.Start();
         }
 
-        public static Service RabbitMQ => 
+        public IRequestClient<TRequest,TResponse> CreateRequestClient<TRequest,TResponse>()
+            where TRequest : class
+            where TResponse : class
+        {
+            return Bus.CreateRequestClient<TRequest, TResponse>(new Uri("rabbitmq://localhost/service_queue"), TimeSpan.FromSeconds(10));
+        }
+
+        public static Service RabbitMQ =>
             new Service(config => BusConfig.ForRabbitMq(config));
 
-        public static Service InMemory => 
+        public static Service InMemory =>
             new Service(config => BusConfig.InMemory(config));
 
 
         public void ScanContractAssembly(
             IComponentContext container,
-            IRabbitMqReceiveEndpointConfigurator config,
+            IReceiveEndpointConfigurator config,
             string assemblyName)
         {
             MethodInfo method = typeof(Service).GetMethod("ResolveConsumer");
@@ -60,7 +73,7 @@ namespace ServiceBus
 
         public static void ResolveConsumer<TContract>(
             IComponentContext container,
-            IRabbitMqReceiveEndpointConfigurator config)
+            IReceiveEndpointConfigurator config)
             where TContract : class
         {
             config.Consumer(() => container.Resolve<IConsumer<TContract>>());
@@ -85,8 +98,8 @@ namespace ServiceBus
             if (disposing)
             {
                 container.Dispose();
-                busHandle.Stop();
-                busHandle.Dispose();
+                BusHandle.Stop();
+                BusHandle.Dispose();
             }
         }
 

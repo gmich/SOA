@@ -1,13 +1,9 @@
 ﻿using Autofac;
 using System;
-using Processing.Consumer;
-using Billing.Consumer;
-using UserManagement.Consumer;
 using MassTransit;
 using System.Reflection;
 using ServiceBus.Config;
 using MassTransit.Log4NetIntegration.Logging;
-using DAL;
 
 [assembly: log4net.Config.XmlConfigurator(ConfigFileExtension = "log4net", Watch = true)]
 
@@ -20,15 +16,9 @@ namespace ServiceBus
 
         public IBusControl Bus { get; }
 
-        private Service(Func<EndpointConfiguration[], IBusControl> configurationMethod)
-        {
-            var builder = new ContainerBuilder();
-
-            builder.RegisterModule<DalEFModule>();
-            builder.RegisterModule<ProcessingConsumerModule>();
-            builder.RegisterModule<BillingConsumerModule>();
-            builder.RegisterModule<UserManagementConsumerModule>();
-
+        private Service(Func<EndpointConfiguration[], IBusControl> configurationMethod,
+                        ContainerBuilder builder)
+        {         
             container = builder.Build();
 
             Log4NetLogger.Use();
@@ -51,11 +41,11 @@ namespace ServiceBus
             return Bus.CreateRequestClient<TRequest, TResponse>(new Uri("rabbitmq://localhost/service_queue"), TimeSpan.FromSeconds(10));
         }
 
-        public static Service RabbitMQ =>
-            new Service(config => BusConfig.ForRabbitMq(config));
+        public static Service ForRabbitMQ(ContainerBuilder builder) =>
+            new Service(config => BusConfig.ForRabbitMq(config),builder);
 
-        public static Service InMemory =>
-            new Service(config => BusConfig.InMemory(config));
+        public static Service InMemory(ContainerBuilder builder) =>
+            new Service(config => BusConfig.InMemory(config),builder);
 
 
         public void ScanContractAssembly(

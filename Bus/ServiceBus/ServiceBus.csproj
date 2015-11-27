@@ -75,6 +75,7 @@
     <None Include="config.log4net">
       <SubType>Designer</SubType>
     </None>
+    <Compile Include="Startup.cs" />
     <Compile Include="Service.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

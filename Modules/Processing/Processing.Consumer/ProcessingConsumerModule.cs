@@ -12,7 +12,8 @@ namespace Processing.Consumer
         {
             builder.RegisterModule<ProcessingCoreModule>();
 
-            builder.Register(c => new ItemConsumer(c.Resolve<IProcessingService>()))
+            builder.Register(c => new ItemConsumer(
+                c.Resolve<IProcessingService>()))
                     .As<IConsumer<RequestItem>>();
         }
 

@@ -23,13 +23,12 @@ namespace DAL.Repositories
             if (entities
                 .Local
                 .Any(localEntity =>
-                    keyRetriever(localEntity).
-                    Equals(keyRetriever(entity))))
+                    keyRetriever(localEntity).Equals(keyRetriever(entity))))
             {
                 markEntityAs(entities.Local
                     .Where(localEntity =>
                       keyRetriever(localEntity).Equals(keyRetriever(entity)))
-                      .First(), EntityState.Detached);
+                    .First(), EntityState.Detached);
             }
             markEntityAs(entity, EntityState.Modified);
         }

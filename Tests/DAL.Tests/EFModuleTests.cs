@@ -61,7 +61,6 @@ namespace DAL.Tests
                 Name = "Thing",
                 Info = "something"
             });
-
             unitOfWork.TryInScope(c => c.Commit(),
                                   onException: (rollback, ex) => rollback());
 

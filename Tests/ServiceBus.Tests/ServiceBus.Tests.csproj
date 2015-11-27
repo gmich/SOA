@@ -39,6 +39,10 @@
       <HintPath>..\..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Autofac.Extras.Moq, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.Extras.Moq.4.0.0\lib\net45\Autofac.Extras.Moq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -77,6 +81,10 @@
     </Reference>
     <Reference Include="Microsoft.Owin.Security.OAuth, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Owin.Security.OAuth.2.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Moq, Version=4.2.1510.2205, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
@@ -126,6 +134,22 @@
     <ProjectReference Include="..\..\Bus\ServiceBus\ServiceBus.csproj">
       <Project>{fc2cfa38-df8a-4b2f-88cd-03ff0f331f7a}</Project>
       <Name>ServiceBus</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\Billing\Billing.Consumer\Billing.Consumer.csproj">
+      <Project>{f7eb7acd-4af0-40c5-9115-a9cfea500493}</Project>
+      <Name>Billing.Consumer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\Processing\Processing.Consumer\Processing.Consumer.csproj">
+      <Project>{3a59e150-8c4b-4ab4-9297-61d9f3693e53}</Project>
+      <Name>Processing.Consumer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\UserManagement\UserManagement.Consumer\UserManagement.Consumer.csproj">
+      <Project>{9567f7a8-54d2-43d7-81e5-4814fc213bc3}</Project>
+      <Name>UserManagement.Consumer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Persistence\DAL\DAL.csproj">
+      <Project>{b302b1f2-3b65-4daa-8607-c8045a6a7012}</Project>
+      <Name>DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Persistence\Model\Model.csproj">
       <Project>{eefaad57-eec1-4cff-81af-2f90adbce037}</Project>

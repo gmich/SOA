@@ -3,6 +3,7 @@ using Model.Membership;
 using System.Security.Claims;
 using Microsoft.AspNet.Identity;
 using UserManagement.Consumer.Managers;
+using System.Collections.Generic;
 
 namespace UserManagement.Consumer
 {
@@ -17,6 +18,7 @@ namespace UserManagement.Consumer
                 .CreateIdentityAsync(user, authenticationType);
             return userIdentity;
         }
+
     }
 }
 
